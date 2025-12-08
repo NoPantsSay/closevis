@@ -57,7 +57,6 @@ export function MainPanel() {
         component,
         tabComponent: "default",
         position: positionOption,
-        minimumWidth: 64,
       });
 
       panel.group.locked = true;

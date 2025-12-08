@@ -27,12 +27,12 @@
     "flat": "^6.0.1",
     "immer": "^10.2.0",
     "mitt": "^3.0.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
     "react-hotkeys-hook": "^5.2.1",
     "react-icons": "^5.5.0",
     "react-intl": "^7.1.14",
-    "react-router-dom": "^7.9.6",
+    "react-router-dom": "^7.10.1",
     "react-tooltip": "^5.30.0",
     "superjson": "^2.2.6",
     "title-case": "^4.3.2",
@@ -49,6 +49,6 @@
     "@vitejs/plugin-react": "^5.1.1",
     "tailwindcss": "^4.1.17",
     "typescript": "~5.9.3",
-    "vite": "^7.2.4"
+    "vite": "^7.2.6"
   }
 }

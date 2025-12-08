@@ -27,7 +27,6 @@ const components = {
 
 export function View() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const layoutId = searchParams.get("layoutId");
 
   const { currentTheme } = useTheme();
   const setTitle = useTitle((state) => state.setTitle);
@@ -59,8 +58,9 @@ export function View() {
   });
 
   useEffect(() => {
+    const layoutId = searchParams.get("layoutId");
     init(layoutId);
-  }, [layoutId]);
+  }, [searchParams]);
 
   const onReady = (event: SplitviewReadyEvent) => {
     setApi(event.api);

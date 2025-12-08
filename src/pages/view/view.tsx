@@ -10,8 +10,9 @@ import {
 } from "dockview-react";
 import { useEffect, useEffectEvent, useState } from "react";
 import { useTitle } from "../../globals/useTitle";
-import { useLayouts } from "../../stores/useLayouts";
+import { type LayoutsInfo, useLayouts } from "../../stores/useLayouts";
 import "dockview-react/dist/styles/dockview.css";
+import { useSearchParams } from "react-router-dom";
 import { useTheme } from "../../stores/useTheme";
 import { eventBus } from "../../utils/eventBus";
 import { LeftSidebar } from "./leftSidebar/leftSidebar";
@@ -25,6 +26,9 @@ const components = {
 };
 
 export function View() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const layoutId = searchParams.get("layoutId");
+
   const { currentTheme } = useTheme();
   const setTitle = useTitle((state) => state.setTitle);
   useEffect(() => {
@@ -33,9 +37,30 @@ export function View() {
 
   const [api, setApi] = useState<SplitviewApi>();
 
-  const { pushRecentLayout, getCurrentLayout, addLayout, updateLayout } =
-    useLayouts();
-  const currentlayout = getCurrentLayout();
+  const { pushRecentLayout, addLayout, updateLayout, getLayout } = useLayouts();
+  const [currentlayout, setCurrentlayout] = useState<LayoutsInfo | null>();
+
+  const init = useEffectEvent((id: string | null) => {
+    const layout = id ? getLayout(id) : null;
+    setCurrentlayout(layout);
+
+    if (!layout) {
+      const uuid = addLayout("default");
+      setSearchParams((prev) => {
+        prev.set("layoutId", uuid);
+        return prev;
+      });
+      console.log(`No layout found ${id}, creating a default layout ${uuid}.`);
+    } else {
+      updateLayout(layout.uuid, { lastOpened: new Date() });
+      pushRecentLayout(layout.uuid);
+      console.log(`Opened layout: ${layout.name}, with ID: ${layout.uuid}`);
+    }
+  });
+
+  useEffect(() => {
+    init(layoutId);
+  }, [layoutId]);
 
   const onReady = (event: SplitviewReadyEvent) => {
     setApi(event.api);
@@ -72,18 +97,6 @@ export function View() {
       currentlayout ? currentlayout.isRightSidebarOpen : true,
     );
   };
-
-  const addDefaultLayout = useEffectEvent(() => {
-    const uuid = addLayout("default");
-    updateLayout(uuid, { lastOpened: new Date() });
-    pushRecentLayout(uuid);
-  });
-
-  useEffect(() => {
-    if (!currentlayout) {
-      addDefaultLayout();
-    }
-  }, [currentlayout]);
 
   const setleftsidebar = useEffectEvent((isOpen: boolean) => {
     if (!currentlayout) {

@@ -138,6 +138,7 @@ interface LayoutsState {
     uuid: string,
     updates: Omit<Partial<LayoutsInfo>, "uuid">,
   ) => void;
+  getLayout: (uuid: string) => LayoutsInfo | null;
   duplicateLayout: (uuid: string) => void;
   getSnapshotAsJSON: (uuid: string) => string;
   loadDataFromJSON: (jsonString: string) => string | null;
@@ -189,6 +190,10 @@ export const useLayouts = create<LayoutsState>()(
             });
           }
         });
+      },
+      getLayout: (uuid: string) => {
+        const layout = get().layouts.get(uuid);
+        return layout ? layout : null;
       },
       duplicateLayout: (uuid: string) => {
         set((state: LayoutsState) => {

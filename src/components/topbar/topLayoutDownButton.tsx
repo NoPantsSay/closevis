@@ -36,14 +36,8 @@ function TopLayoutDownPanel({
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const parentRef = useRef(null);
-  const {
-    layouts,
-    getRecentLayouts,
-    getCurrentLayout,
-    updateLayout,
-    pushRecentLayout,
-    loadDataFromJSON,
-  } = useLayouts();
+  const { layouts, getRecentLayouts, getCurrentLayout, loadDataFromJSON } =
+    useLayouts();
   const [isRecentExpend, setIsRecentExpend] = useState(false);
   const [isLocalExpend, setIsLocalExpend] = useState(false);
   const [isOnlineExpend, setIsOnlineExpend] = useState(false);
@@ -56,9 +50,10 @@ function TopLayoutDownPanel({
     if (str) {
       const uuid = loadDataFromJSON(str);
       if (uuid) {
-        navigate("/view");
-        updateLayout(uuid, { lastOpened: new Date() });
-        pushRecentLayout(uuid);
+        const params = new URLSearchParams({
+          layoutId: uuid,
+        });
+        navigate(`/view?${params.toString()}`);
       }
     }
   });
@@ -299,9 +294,10 @@ function TopLayoutDownPanel({
                     style={{ transform: `translateY(${virtualItem.start}px)` }}
                     onClick={() => {
                       if (uuid) {
-                        navigate("/view");
-                        updateLayout(uuid, { lastOpened: new Date() });
-                        pushRecentLayout(uuid);
+                        const params = new URLSearchParams({
+                          layoutId: uuid,
+                        });
+                        navigate(`/view?${params.toString()}`);
                         close();
                       }
                     }}
@@ -324,7 +320,7 @@ function TopLayoutDownPanel({
 
 export function TopLayoutDownButton() {
   const navigate = useNavigate();
-  const { getRecentLayouts, updateLayout, pushRecentLayout } = useLayouts();
+  const { getRecentLayouts } = useLayouts();
   const recentLayouts = getRecentLayouts();
   const [isNewLayoutOpen, setIsNewLayoutOpen] = useState(false);
 
@@ -360,9 +356,10 @@ export function TopLayoutDownButton() {
           open={isNewLayoutOpen}
           onClose={(uuid) => {
             if (uuid) {
-              navigate("/view");
-              updateLayout(uuid, { lastOpened: new Date() });
-              pushRecentLayout(uuid);
+              const params = new URLSearchParams({
+                layoutId: uuid,
+              });
+              navigate(`/view?${params.toString()}`);
             }
             setIsNewLayoutOpen(false);
           }}

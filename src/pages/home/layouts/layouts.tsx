@@ -214,7 +214,7 @@ export function Layouts() {
         }
         <div
           className={clsx(
-            "grid grid-cols-[minmax(100px,_1fr)_minmax(100px,_1fr)_minmax(100px,_1fr)] gap-3 justify-between items-center p-3 overflow-x-auto",
+            "grid grid-cols-[minmax(100px,1fr)_minmax(100px,1fr)_minmax(100px,1fr)] gap-3 justify-between items-center p-3 overflow-x-auto",
           )}
         >
           {
@@ -350,7 +350,7 @@ export function Layouts() {
           <div ref={parentRef} className="flex flex-col overflow-auto">
             <div
               className={clsx(
-                "grid grid-cols-[40px_minmax(150px,_1fr)_140px_120px_120px_minmax(90px,_1fr)_60px] sticky top-0 h-10 items-center bg-background z-1",
+                "grid grid-cols-[40px_minmax(150px,1fr)_140px_120px_120px_minmax(90px,1fr)_60px] sticky top-0 h-10 items-center bg-background z-1",
               )}
             >
               <div className="flex h-full items-center justify-center border-b border-border">
@@ -467,7 +467,7 @@ export function Layouts() {
                     key={data.uuid}
                     className={clsx(
                       "absolute top-0 left-0 w-full",
-                      "group grid grid-cols-[40px_minmax(150px,_1fr)_140px_120px_120px_minmax(90px,_1fr)_60px] h-10 items-center",
+                      "group grid grid-cols-[40px_minmax(150px,1fr)_140px_120px_120px_minmax(90px,1fr)_60px] h-10 items-center",
                     )}
                     style={{ transform: `translateY(${virtualItem.start}px)` }}
                   >

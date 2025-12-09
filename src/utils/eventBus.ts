@@ -7,9 +7,9 @@ type AppEvents = {
   setrightsidebar: boolean; // 设置右侧边栏显示状态
   openpanelsettings: undefined; // 打开面板设置
   setActiveMainPanelId: string; // 设置当前活动的主面板ID
-  // 通配符（mitt v3+ 支持）
-  // biome-ignore lint/suspicious/noExplicitAny: just ingore
-  "**": { type: keyof AppEvents; payload: any };
+  togglelayoutchecked: string;  // 切换布局选中状态
+  deletelayoutchecked: string;  // 删除布局选中状态
+  togglelayoutcheckedall: undefined; // 切换所有布局选中状态
 };
 
 export const eventBus = mitt<AppEvents>();

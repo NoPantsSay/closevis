@@ -19,15 +19,14 @@ import {
   LayoutTypeEnum,
   useLayouts,
 } from "../../../stores/useLayouts";
+import { eventBus } from "../../../utils/eventBus";
 
 export function LayoutItemMenuButton({
   uuid,
   data,
-  onDelete,
 }: {
   uuid: string;
   data: LayoutsInfo;
-  onDelete: (uuid: string) => void;
 }) {
   const intl = useIntl();
   const [isDeleteLayoutOpen, setIsDeleteLayoutOpen] = useState(false);
@@ -148,7 +147,7 @@ export function LayoutItemMenuButton({
           )}
           onDelete={() => {
             delLayout(uuid);
-            onDelete(uuid);
+            eventBus.emit("deletelayoutchecked", uuid);
           }}
         />
       )}

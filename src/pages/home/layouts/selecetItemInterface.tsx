@@ -3,16 +3,14 @@ import { clsx } from "clsx";
 import { useState } from "react";
 import { IoTrashOutline } from "react-icons/io5";
 import { FormattedMessage, useIntl } from "react-intl";
-import type { Updater } from "use-immer";
 import { DeleteLayoutDialog } from "../../../components/dialogs/deleteLayoutDialog";
 import { useLayouts } from "../../../stores/useLayouts";
+import { eventBus } from "../../../utils/eventBus";
 
 export function SelecetItemInterface({
   layoutsCheckedSet,
-  setLayoutsCheckedSet,
 }: {
   layoutsCheckedSet: Set<string>;
-  setLayoutsCheckedSet: Updater<Set<string>>;
 }) {
   const intl = useIntl();
   const [isDeleteLayoutOpen, setIsDeleteLayoutOpen] = useState(false);
@@ -22,7 +20,7 @@ export function SelecetItemInterface({
     <>
       <div
         className={clsx(
-          "absolute left-12.5 top-0.25 right-0 h-9.5 z-2 flex flex-row gap-3 items-center bg-data-grid-border",
+          "absolute left-12.5 top-1px right-0 h-9.5 z-2 flex flex-row gap-3 items-center bg-data-grid-border",
         )}
       >
         <Button
@@ -56,8 +54,8 @@ export function SelecetItemInterface({
           onDelete={() => {
             layoutsCheckedSet.forEach((uuid) => {
               delLayout(uuid);
+              eventBus.emit("deletelayoutchecked", uuid);
             });
-            setLayoutsCheckedSet(new Set<string>());
           }}
         />
       )}

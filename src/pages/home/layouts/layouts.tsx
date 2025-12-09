@@ -11,7 +11,7 @@ import {
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { clsx } from "clsx";
 import { formatDistance } from "date-fns";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
 import { HiArrowDown, HiArrowUp } from "react-icons/hi2";
 import {
   MdCheckBox,
@@ -35,6 +35,7 @@ import { LayoutItemMenuButton } from "./layoutItemMenuButton";
 import { LayoutItemOpenButton } from "./layoutItemOpenButton";
 import { SelecetItemInterface } from "./selecetItemInterface";
 import { TopAddButton } from "./topAddButton";
+import { eventBus } from "../../../utils/eventBus";
 
 enum SortTypeEnum {
   NAME_UP,
@@ -154,9 +155,10 @@ export function Layouts() {
     overscan: 5,
   });
 
+  // 列表项 全选/反选 功能
   const [layoutsCheckedSet, setLayoutsCheckedSet] = useImmer(new Set<string>());
 
-  const itemToggle = (uuid: string) => {
+  const togglelayoutchecked = useEffectEvent((uuid: string) => {
     const checked = layoutsCheckedSet.has(uuid);
 
     if (!checked) {
@@ -168,15 +170,15 @@ export function Layouts() {
         draft.delete(uuid);
       });
     }
-  };
+  });
 
-  const itemDelete = (uuid: string) => {
+  const deletelayoutchecked = useEffectEvent((uuid: string) => {
     setLayoutsCheckedSet((draft) => {
       draft.delete(uuid);
     });
-  };
+  });
 
-  const itemAllToggle = () => {
+  const togglelayoutcheckedall = useEffectEvent(() => {
     const checked = layoutsCheckedSet.size !== 0;
 
     if (!checked) {
@@ -188,7 +190,29 @@ export function Layouts() {
     } else {
       setLayoutsCheckedSet(new Set<string>());
     }
-  };
+  });
+
+  useEffect(() => {
+    eventBus.on("togglelayoutchecked", (uuid) => {
+      togglelayoutchecked(uuid);
+    });
+
+    eventBus.on("deletelayoutchecked", (uuid) => {
+      deletelayoutchecked(uuid);
+    });
+
+    eventBus.on("togglelayoutcheckedall", () => {
+      togglelayoutcheckedall();
+    });
+
+    // 组件卸载时自动清理（防止内存泄漏）
+    return () => {
+      eventBus.off("togglelayoutchecked");
+      eventBus.off("deletelayoutchecked");
+      eventBus.off("togglelayoutcheckedall");
+    };
+  }, []);
+
 
   const SelectAllIconComponent =
     layoutsCheckedSet.size === 0
@@ -344,7 +368,6 @@ export function Layouts() {
           {layoutsCheckedSet.size !== 0 && (
             <SelecetItemInterface
               layoutsCheckedSet={layoutsCheckedSet}
-              setLayoutsCheckedSet={setLayoutsCheckedSet}
             />
           )}
           <div ref={parentRef} className="flex flex-col overflow-auto">
@@ -355,7 +378,9 @@ export function Layouts() {
             >
               <div className="flex h-full items-center justify-center border-b border-border">
                 <Button
-                  onClick={itemAllToggle}
+                  onClick={() => {
+                    eventBus.emit("togglelayoutcheckedall");
+                  }}
                   className={clsx(
                     "size-5 rounded-xs outline-none items-center cursor-pointer",
                     layoutsCheckedSet.size === 0
@@ -462,7 +487,7 @@ export function Layouts() {
                   // biome-ignore lint/a11y/useKeyWithClickEvents:  just ignore
                   <div
                     onClick={() => {
-                      itemToggle(data.uuid);
+                      eventBus.emit("togglelayoutchecked", data.uuid);
                     }}
                     key={data.uuid}
                     className={clsx(
@@ -485,7 +510,7 @@ export function Layouts() {
                       <Button
                         onClick={(event) => {
                           event.stopPropagation();
-                          itemToggle(data.uuid);
+                          eventBus.emit("togglelayoutchecked", data.uuid);
                         }}
                         className={clsx(
                           "size-5 rounded-xs outline-none items-center cursor-pointer",
@@ -633,7 +658,6 @@ export function Layouts() {
                       <LayoutItemMenuButton
                         uuid={data.uuid}
                         data={data}
-                        onDelete={itemDelete}
                       />
                     </div>
                   </div>

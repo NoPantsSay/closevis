@@ -31,11 +31,11 @@ import {
   useLayouts,
 } from "../../../stores/useLayouts";
 import { useTimeZoneStore } from "../../../stores/useTimeZoneStore";
+import { eventBus } from "../../../utils/eventBus";
 import { LayoutItemMenuButton } from "./layoutItemMenuButton";
 import { LayoutItemOpenButton } from "./layoutItemOpenButton";
 import { SelecetItemInterface } from "./selecetItemInterface";
 import { TopAddButton } from "./topAddButton";
-import { eventBus } from "../../../utils/eventBus";
 
 enum SortTypeEnum {
   NAME_UP,
@@ -213,7 +213,6 @@ export function Layouts() {
     };
   }, []);
 
-
   const SelectAllIconComponent =
     layoutsCheckedSet.size === 0
       ? MdCheckBoxOutlineBlank
@@ -366,9 +365,7 @@ export function Layouts() {
         }
         <div className="relative grid grid-rows-1 grid-cols-1 mt-2 border-t border-t-border min-h-0 overflow-hidden">
           {layoutsCheckedSet.size !== 0 && (
-            <SelecetItemInterface
-              layoutsCheckedSet={layoutsCheckedSet}
-            />
+            <SelecetItemInterface layoutsCheckedSet={layoutsCheckedSet} />
           )}
           <div ref={parentRef} className="flex flex-col overflow-auto">
             <div
@@ -655,10 +652,7 @@ export function Layouts() {
                         },
                       )}
                     >
-                      <LayoutItemMenuButton
-                        uuid={data.uuid}
-                        data={data}
-                      />
+                      <LayoutItemMenuButton uuid={data.uuid} data={data} />
                     </div>
                   </div>
                 );

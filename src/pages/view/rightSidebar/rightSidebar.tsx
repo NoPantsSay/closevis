@@ -13,7 +13,7 @@ const components = {
   variables: () => {
     return null;
   },
-  layout_history: () => {
+  events: () => {
     return null;
   },
 };
@@ -42,9 +42,9 @@ export function RightSidebar() {
     });
 
     event.api.addPanel({
-      id: "layout_history",
-      title: "Layout History",
-      component: "layout_history",
+      id: "events",
+      title: "Events",
+      component: "events",
       tabComponent: "sidebar",
     });
   };

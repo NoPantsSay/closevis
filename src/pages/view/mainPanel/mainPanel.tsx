@@ -7,7 +7,9 @@ import {
   themeDark,
   themeLight,
 } from "dockview-react";
+import { debounce } from "lodash";
 import { useEffect, useEffectEvent, useState } from "react";
+import { useLayouts } from "../../../stores/useLayouts";
 import { useTheme } from "../../../stores/useTheme";
 import { eventBus } from "../../../utils/eventBus";
 import { tabComponents } from "../components/tabComponents";
@@ -29,18 +31,56 @@ const watermark = (_props: IWatermarkPanelProps) => {
 export function MainPanel() {
   const { currentTheme } = useTheme();
   const [api, setApi] = useState<DockviewApi>();
+  const { updateLayout, getCurrentLayout } = useLayouts();
+  const currentlayout = getCurrentLayout();
+  const layoutString = currentlayout?.layoutData;
 
   const onReady = (event: DockviewReadyEvent) => {
+    if (layoutString) {
+      try {
+        const layout = JSON.parse(layoutString);
+        event.api.fromJSON(layout);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
     setApi(event.api);
   };
 
+  const savelayoutdata = useEffectEvent(
+    debounce(() => {
+      if (!api) {
+        return;
+      }
+      if (!currentlayout) {
+        return;
+      }
+
+      const layout = api.toJSON();
+      updateLayout(currentlayout.uuid, { layoutData: JSON.stringify(layout) });
+    }, 300),
+  );
+
   useEffect(() => {
-    const disposable = api?.onDidActivePanelChange((panel) => {
-      eventBus.emit("setActiveMainPanelId", panel ? panel.id : "");
-    });
+    if (!api) {
+      return;
+    }
+
+    const disposables = [
+      api.onDidActivePanelChange((panel) => {
+        eventBus.emit("setActiveMainPanelId", panel ? panel.id : "");
+      }),
+
+      api.onDidLayoutChange(() => {
+        savelayoutdata();
+      }),
+    ];
 
     return () => {
-      disposable?.dispose();
+      disposables.forEach((d) => {
+        d.dispose();
+      });
     };
   }, [api]);
 
@@ -76,6 +116,7 @@ export function MainPanel() {
 
   return (
     <DockviewReact
+      key={layoutString}
       theme={currentTheme === "DARK" ? themeDark : themeLight}
       onReady={onReady}
       components={components}

@@ -50,6 +50,9 @@ importers:
       immer:
         specifier: ^10.2.0
         version: 10.2.0
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
       mitt:
         specifier: ^3.0.1
         version: 3.0.1
@@ -99,6 +102,9 @@ importers:
       '@tauri-apps/cli':
         specifier: ^2.9.5
         version: 2.9.5
+      '@types/lodash':
+        specifier: ^4.17.21
+        version: 4.17.21
       '@types/react':
         specifier: ^19.2.7
         version: 19.2.7
@@ -837,6 +843,9 @@ packages:
     peerDependencies:
       '@types/react': '*'
 
+  '@types/lodash@4.17.21':
+    resolution: {integrity: sha512-FOvQ0YPD5NOfPgMzJihoT+Za5pdkDJWcbpuj1DjaKZIr/gxodQjY/uWEFlTNqW2ugXHUiL8lRQgw63dzKHZdeQ==}
+
   '@types/react-dom@19.2.3':
     resolution: {integrity: sha512-jp2L/eY6fn+KgVVQAOqYItbF0VY/YApe5Mz2F0aykSO8gx31bYCZyvSeYxCHKvzHG5eZjc+zyaS5BrBWya2+kQ==}
     peerDependencies:
@@ -1060,6 +1069,9 @@ packages:
   lightningcss@1.30.2:
     resolution: {integrity: sha512-utfs7Pr5uJyyvDETitgsaqSyjCb2qNRAtuqUeWIAKztsOYdcACf2KtARYXg2pSvhkt+9NfoaNY7fxjl6nuMjIQ==}
     engines: {node: '>= 12.0.0'}
+
+  lodash@4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
@@ -1888,6 +1900,8 @@ snapshots:
       '@types/react': 19.2.7
       hoist-non-react-statics: 3.3.2
 
+  '@types/lodash@4.17.21': {}
+
   '@types/react-dom@19.2.3(@types/react@19.2.7)':
     dependencies:
       '@types/react': 19.2.7
@@ -2083,6 +2097,8 @@ snapshots:
       lightningcss-linux-x64-musl: 1.30.2
       lightningcss-win32-arm64-msvc: 1.30.2
       lightningcss-win32-x64-msvc: 1.30.2
+
+  lodash@4.17.21: {}
 
   lru-cache@5.1.1:
     dependencies:

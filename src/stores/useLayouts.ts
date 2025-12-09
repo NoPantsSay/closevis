@@ -127,6 +127,7 @@ export interface LayoutsInfo {
   lastOpened?: Date;
   isLeftSidebarOpen: boolean;
   isRightSidebarOpen: boolean;
+  layoutData?: string;
 }
 
 interface LayoutsState {

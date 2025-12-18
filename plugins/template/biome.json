@@ -14,9 +14,7 @@
       "./*.ts",
       "./*.mts",
       "./*.mjs",
-      "!src-tauri",
-      "!dist",
-      "!plugins"
+      "!dist"
     ]
   },
   "formatter": {

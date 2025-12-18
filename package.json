@@ -4,8 +4,9 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "build:plugins": "(cd plugins && pnpm -r build && pnpm -r release)",
+    "dev": "pnpm build:plugins && vite",
+    "build": "pnpm build:plugins && tsc && vite build",
     "preview": "vite preview",
     "lint": "biome check",
     "fix": "biome check --fix",

@@ -13,8 +13,8 @@
     "windows": [
       {
         "title": "closevis",
-        "width": 1000,
-        "height": 800
+        "width": 980,
+        "height": 640
       }
     ],
     "security": {

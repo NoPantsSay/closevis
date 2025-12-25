@@ -17,10 +17,7 @@ closevis 是一个数据可视化调试工具，目前仍处于早期开发阶�
 
 ***这是 Tauri需要的[环境配置](https://tauri.app/start/prerequisites/)。 请遵循以上步骤。***
 
-如果您的计算机已安装 Node.js 和 npm，只需执行以下命令即可全局安装 pnpm：
-``` bash
-npm install -g pnpm
-```
+***访问[Node.js网站](https://nodejs.org/)，下载并安装长期支持版本（LTS）,请选择PNPM。***
 
 ### 安装项目依赖
 

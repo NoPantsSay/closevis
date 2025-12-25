@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 .vscode
-plugins_release
+plugins/release

@@ -22,7 +22,7 @@ closevis 是一个数据可视化调试工具，目前仍处于早期开发阶�
 ### 安装项目依赖
 
 ```shell
-pnpm install
+pnpm install:all
 ```
 
 ### 运行

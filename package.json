@@ -4,12 +4,16 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "install:all": "(cd plugins && pnpm -r install) && pnpm install",
+    "update:all": "(cd plugins && pnpm -r update) && pnpm update",
     "build:plugins": "(cd plugins && pnpm -r build && pnpm -r release)",
+    "lint:plugins": "(cd plugins && pnpm -r lint)",
+    "fix:plugins": "(cd plugins && pnpm -r fix)",
     "dev": "pnpm build:plugins && vite",
     "build": "pnpm build:plugins && tsc && vite build",
     "preview": "vite preview",
-    "lint": "biome check",
-    "fix": "biome check --fix",
+    "lint": "pnpm lint:plugins && biome check",
+    "fix": "pnpm fix:plugins && biome check --fix",
     "tauri": "tauri"
   },
   "dependencies": {
@@ -24,7 +28,7 @@
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "decimal.js": "^10.6.0",
-    "dockview-react": "^4.11.0",
+    "dockview-react": "^4.12.0",
     "flat": "^6.0.1",
     "immer": "^10.2.0",
     "lodash": "^4.17.21",
@@ -34,7 +38,7 @@
     "react-hotkeys-hook": "^5.2.1",
     "react-icons": "^5.5.0",
     "react-intl": "^7.1.14",
-    "react-router-dom": "^7.10.1",
+    "react-router-dom": "^7.11.0",
     "react-tooltip": "^5.30.0",
     "superjson": "^2.2.6",
     "title-case": "^4.3.2",
@@ -43,7 +47,7 @@
     "zustand": "^5.0.9"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.8",
+    "@biomejs/biome": "^2.3.10",
     "@tailwindcss/vite": "^4.1.18",
     "@tauri-apps/cli": "^2.9.6",
     "@types/lodash": "^4.17.21",
@@ -52,7 +56,7 @@
     "@vitejs/plugin-react": "^5.1.2",
     "tailwindcss": "^4.1.18",
     "typescript": "~5.9.3",
-    "vite": "^7.2.7",
-    "vite-tsconfig-paths": "^6.0.1"
+    "vite": "^7.3.0",
+    "vite-tsconfig-paths": "^6.0.3"
   }
 }

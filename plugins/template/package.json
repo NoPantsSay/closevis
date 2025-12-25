@@ -5,12 +5,14 @@
   "type": "module",
   "author": "nopantssay",
   "description": "this is template plugin",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "release": "pnpm pack -out ../../plugins_release/%s_%v.tgz",
+    "release": "pnpm pack -out ../release/%s_%v.tgz",
     "lint": "biome check",
     "fix": "biome check --fix"
   },
@@ -19,7 +21,7 @@
     "react-dom": "^19.2.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.9",
+    "@biomejs/biome": "^2.3.10",
     "@eslint/js": "^9.39.2",
     "@module-federation/vite": "^1.9.4",
     "@types/node": "^24.10.4",
@@ -28,8 +30,8 @@
     "@vitejs/plugin-react": "^5.1.2",
     "globals": "^16.5.0",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.50.0",
+    "typescript-eslint": "^8.50.1",
     "vite": "^7.3.0",
-    "vite-tsconfig-paths": "^6.0.2"
+    "vite-tsconfig-paths": "^6.0.3"
   }
 }

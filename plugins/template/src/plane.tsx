@@ -1,3 +1,3 @@
 export function Plane() {
-    return <div>Plane</div>
+  return <div>Plane</div>;
 }
